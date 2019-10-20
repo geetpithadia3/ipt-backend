@@ -19,5 +19,7 @@ STEPS TO CONFIGURE BACK END
 	pip install flask_testing
 	
 	pip install pymongo
+
+	pip install pymongo[srv]
 9. Run 'python manage.py run'
 10. If there are no errors, the server would run on localhost port 5000.
