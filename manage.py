@@ -2,6 +2,8 @@
 import unittest
 
 from flask_script import Manager
+# Manager file
+# This file is the entry point to the application 
 from app import create_app
 
 app = create_app()
@@ -10,7 +12,7 @@ manager = Manager(app)
 
 @manager.command
 def run():
-    app.run()
+    app.run(debug=True)
 
 @manager.command
 def test():

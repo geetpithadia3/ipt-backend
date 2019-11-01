@@ -1,3 +1,5 @@
+# DB class
+# Operations dealing with the database are mentioned in this file
 import pymongo
 from bson.json_util import dumps
 
@@ -5,7 +7,6 @@ from bson.json_util import dumps
 class DB(object):
     URI = 'mongodb+srv://geet:admin@progresstracker-ocrea.gcp.mongodb.net/test?retryWrites=true&w=majority'
 
-    """ Database related operations defined here"""
     @staticmethod
     def init():
         client = pymongo.MongoClient(DB.URI)
@@ -14,7 +15,7 @@ class DB(object):
     @staticmethod
     def insert(collection, data):
         DB.DATABASE[collection].insert(data)
-
+       
     @staticmethod
     def find_one(collection, query):
         return DB.DATABASE[collection].find_one(query)
@@ -22,4 +23,8 @@ class DB(object):
     @staticmethod
     def find(collection):
         return dumps(DB.DATABASE[collection].find())
+
+    @staticmethod
+    def count(collection,query):
+        return DB.DATABASE[collection].find(query).count()
 
