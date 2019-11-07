@@ -3,12 +3,14 @@
 from flask import Blueprint, request
 from app.main.services import user_service
 from bson.json_util import dumps
+from flask_cors import CORS, cross_origin
 
 user_api = Blueprint('user_api', __name__)
 
 """API endpoints for USER"""
 
 @user_api.route('/add_user', methods = ['POST'])
+@cross_origin(supports_credentials=True)
 def add_user():
     requestData = request.get_json()
     user_service.add_user(requestData)

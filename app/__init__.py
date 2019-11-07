@@ -1,5 +1,7 @@
-from flask import Flask
+# Initialization file
+# This file sets up the application for running
 
+from flask import Flask
 from app.database import DB
 from flask_bcrypt import Bcrypt
 

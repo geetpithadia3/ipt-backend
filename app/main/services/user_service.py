@@ -16,8 +16,6 @@ def get_all_users():
     return User.fetch_all_users()
 
 def authenticateUser(username, password):
-   
-    print(User.fetch(username))
     if(bcrypt.check_password_hash(User.fetch(username)["password"], password)):
         return "TRUE"
     else:

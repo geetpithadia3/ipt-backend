@@ -5,10 +5,11 @@ from flask_script import Manager
 # Manager file
 # This file is the entry point to the application 
 from app import create_app
-
+from flask_cors import CORS, cross_origin
 app = create_app()
 app.app_context().push()
 manager = Manager(app)
+CORS(app, support_credentials=True)
 
 @manager.command
 def run():
