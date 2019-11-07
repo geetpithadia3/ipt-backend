@@ -1,6 +1,6 @@
 # APIs for student activity
 
-from flask import Blueprint, request
+from flask import Blueprint, request, Response
 from app.main.services import studentactivity_service
 from bson.json_util import dumps
 
@@ -13,7 +13,7 @@ def add_activity():
         studentactivity_service.add_activity(requestData)
         return dumps({'success': True, 'data': studentactivity_service.getActivitiesByUser(requestData["created_by"])})
     except Exception as e:
-        return dumps({'error': str(e)})
+        return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
 
 @studentactivity_api.route('/getactivitesbyuser', methods = ['GET'])
 def getActivitiesByUser():
@@ -21,4 +21,4 @@ def getActivitiesByUser():
         username = request.args.get('username')
         return dumps({'success': True, 'data': studentactivity_service.getActivitiesByUser(username)})
     except Exception as e:
-        return dumps({'error': str(e)})
+        return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
