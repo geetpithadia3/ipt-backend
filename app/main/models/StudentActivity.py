@@ -8,5 +8,13 @@ class StudentActivity(object):
         self.created_by = activity["created_by"]
         self.created_at = datetime.datetime.utcnow()
 
+    def json(self):
+        return {
+            'skills': self.skills,
+            'companies': self.companies,
+            'created_by': self.created_by,
+            'created_at': self.created_at
+        }
+
     def insert(self):    
         DB.insert(collection='studentactivity', data=self.json())
