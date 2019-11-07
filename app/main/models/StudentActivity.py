@@ -1,0 +1,2 @@
+class StudentActivity(object):
+    
