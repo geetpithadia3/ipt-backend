@@ -5,21 +5,22 @@ from app import bcrypt
 
 def add_user(data):
     data["password"] = bcrypt.generate_password_hash(data["password"]).decode('utf-8')
-    new_user = User(data)
-    new_user.insert()
+    User.insert(data)
 
-def get_user(name):
-    return User.fetch(name)
+def get_user(email):
+    return User.fetch(email)
 
 
 def get_all_users():
     return User.fetch_all_users()
 
-def authenticateUser(username, password):
-    if(bcrypt.check_password_hash(User.fetch(username)["password"], password)):
-        return "TRUE"
+def authenticateUser(email, password):
+    if(User.count_query({"email":email})==0):
+        return 404
+    elif(bcrypt.check_password_hash(User.fetch(email)["password"], password)):
+        return 200
     else:
-        return "FALSE"
+        return 204
     
 
 

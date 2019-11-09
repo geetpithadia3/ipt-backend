@@ -18,22 +18,22 @@ def add_user():
 
 
 @user_api.route('/get_user')
-def get_user(name):
-    return user_service.get_user(name);
+def get_user(email):
+    return user_service.get_user(email)
 
 @user_api.route('/get_all_users')
 def get_all_users():
     try:
-        return user_service.get_all_users()
+        return dumps(user_service.get_all_users())
     except Exception as e:
-        return dumps({'error': str(e)})
+        return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
 
 
 @user_api.route('/authenticate', methods = ['POST'])
 def authenticateUser():
     try:
         requestData = request.get_json();
-        return user_service.authenticateUser(requestData['username'],requestData['password'])
+        return dumps({'status':user_service.authenticateUser(requestData['email'],requestData['password'])}), 200, {'ContentType':'application/json'} 
     except Exception as e:
-        return dumps({'error': str(e)})
+        return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
 
