@@ -21,8 +21,8 @@ class DB(object):
         return DB.DATABASE[collection].find_one(query)
 
     @staticmethod
-    def find(collection, query={}):
-        return DB.DATABASE[collection].find(query)
+    def find(collection, query={}, projection={}):
+        return DB.DATABASE[collection].find(query,projection)
 
     @staticmethod
     def count(collection,query):
