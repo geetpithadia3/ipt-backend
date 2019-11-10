@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt()
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='', static_folder='web/static')
     DB.init()
     bcrypt.init_app(app)
     register_blueprint(app)
