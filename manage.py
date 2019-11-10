@@ -11,6 +11,18 @@ app.app_context().push()
 manager = Manager(app)
 CORS(app, support_credentials=True)
 
+from flask import Flask, send_from_directory
+
+@app.route('/')
+def index():
+    print(app.static_folder)
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.errorhandler(404)
+def errorHandler(e):
+    print(app.static_folder)
+    return send_from_directory(app.static_folder, 'index.html')
+
 @manager.command
 def run():
     app.run(debug=True)
@@ -25,5 +37,3 @@ def test():
 
 if __name__ == '__main__':
     manager.run()
-
-
