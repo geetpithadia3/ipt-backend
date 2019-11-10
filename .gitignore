@@ -6,3 +6,4 @@ __pycache__/
 *.py[cod]
 
 # ignoring static web
+web/static/
