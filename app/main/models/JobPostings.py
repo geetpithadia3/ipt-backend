@@ -25,8 +25,8 @@ class JobPostings(object):
         return DB.find_one("jobPostings", {"jobId": jobId})
 
     @staticmethod
-    def fetch_by_company(companyName):
-        return DB.find("jobPostings", {"company": companyName})
+    def fetch_by_company(companyList):
+        return DB.find("jobPostings", {"company": {"$in":companyList}})
 
     @staticmethod
     def fetch_all_postings():

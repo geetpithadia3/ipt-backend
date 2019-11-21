@@ -22,5 +22,9 @@ class StudentActivity(object):
     def getActivitiesByUser(userName):
         return DB.find("studentactivity", {"created_by": userName})
 
+    @staticmethod
+    def fetch(created_by):
+        return DB.find("studentactivity", {"created_by": created_by})
+
     def insert(self):    
         DB.insert(collection='studentactivity', data=self.json())
