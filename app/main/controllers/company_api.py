@@ -18,8 +18,9 @@ def add_company():
     return dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
-@company_api.route('/get_company')
-def get_company(name):
+@company_api.route('/get_company/<companyName>')
+def get_company():
+    name = request.args.get()
     return company_service.add_company(name)
 
 
@@ -29,3 +30,12 @@ def get_company_details_list():
         return dumps(company_service.get_company_details_list())
     except Exception as e:
         return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
+
+@company_api.route('/get_company_list')
+def get_company_list():
+    try:
+        return dumps(company_service.get_company_list())
+    except Exception as e:
+        return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
+        
+

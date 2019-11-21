@@ -17,8 +17,12 @@ def create_app():
 from app.main.controllers.user_api import user_api
 from app.main.controllers.studentactivity_api import studentactivity_api
 from app.main.controllers.company_api import company_api
+from app.main.controllers.jobPostings_api import jobPostings_api
+from app.main.controllers.dashboard_api import dashboard_api
 def register_blueprint(app):
     """Register blueprints on adding new api files"""
     app.register_blueprint(user_api, url_prefix='/api/user')
     app.register_blueprint(studentactivity_api, url_prefix='/api/activity')
     app.register_blueprint(company_api, url_prefix='/api/company')
+    app.register_blueprint(jobPostings_api, url_prefix='/api/posting')
+    app.register_blueprint(dashboard_api, url_prefix='/api/dashboard')

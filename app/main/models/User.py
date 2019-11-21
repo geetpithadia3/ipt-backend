@@ -11,6 +11,7 @@ class User(object):
 
     @staticmethod
     def insert(userObj):
+        
         userObj['created_at'] = datetime.datetime.utcnow()
         if DB.count("users", {"email": userObj['email']})<=0:
             DB.insert(collection='users', data=userObj)

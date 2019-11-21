@@ -15,6 +15,10 @@ class DB(object):
     @staticmethod
     def insert(collection, data):
         DB.DATABASE[collection].insert(data)
+
+    @staticmethod
+    def update(collection, criteria, query):
+        DB.DATABASE[collection].update(criteria,{'$set':query})
        
     @staticmethod
     def find_one(collection, query):
@@ -22,7 +26,11 @@ class DB(object):
 
     @staticmethod
     def find(collection, query={}, projection={}):
-        return DB.DATABASE[collection].find(query,projection)
+        if(projection=={}):
+            return DB.DATABASE[collection].find(query)
+        else:
+            return DB.DATABASE[collection].find(query,projection)
+
 
     @staticmethod
     def count(collection,query):

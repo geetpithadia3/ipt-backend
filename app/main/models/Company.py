@@ -15,6 +15,11 @@ class Company(object):
         if DB.count("company", {"name": companyObj['name']}) <= 0:
             DB.insert(collection='company', data=companyObj)
 
+
+    @staticmethod
+    def update(companyName, query):
+        return DB.update("company", {"name":companyName}, query)
+
     @staticmethod
     def fetch(name):
         return DB.find_one("company", {"name": name})
@@ -22,7 +27,6 @@ class Company(object):
     @staticmethod
     def fetch_all_companies():
         return DB.find("company")
-
 
     @staticmethod
     def fetch_all_company_details():

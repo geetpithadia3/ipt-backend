@@ -6,6 +6,7 @@ class StudentActivity(object):
         self.skills = activity["skills"]
         self.companies = activity["companies"]
         self.created_by = activity["created_by"]
+        self.activity_type = activity["activity_type"]
         self.created_at = datetime.datetime.utcnow()
 
     def json(self):
@@ -13,7 +14,8 @@ class StudentActivity(object):
             'skills': self.skills,
             'companies': self.companies,
             'created_by': self.created_by,
-            'created_at': self.created_at
+            'created_at': self.created_at,
+            'activity_type':self.activity_type
         }
     
     @staticmethod
