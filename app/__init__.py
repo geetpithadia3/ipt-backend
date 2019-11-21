@@ -9,6 +9,7 @@ bcrypt = Bcrypt()
 
 def create_app():
     app = Flask(__name__, static_url_path='', static_folder='../web/static')
+    app.secret_key = 'hack me'
     DB.init()
     bcrypt.init_app(app)
     register_blueprint(app)

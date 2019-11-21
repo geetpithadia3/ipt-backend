@@ -3,6 +3,7 @@
 from app.main.models.User import User
 from app.main.services import studentactivity_service
 from app import bcrypt
+from flask import Flask, session
 
 def add_user(data):
     for key in data["basicDetails"]:
@@ -25,12 +26,15 @@ def get_user(email):
 
 
 def get_all_users():
+    # if "user_email" in session:
+        # print(session["user_email"])
     return User.fetch_all_users()
 
 def authenticateUser(email, password):
     if(User.count_query({"email":email})==0):
         return 404
     elif(bcrypt.check_password_hash(User.fetch(email)["password"], password)):
+        session["user_email"] = email
         return 200
     else:
         return 204
@@ -40,7 +44,6 @@ def get_interested_companies_count(email):
 
 def get_registered_skills_count(email):
     return len(User.fetch(email)["skills"])
-    
 
 
 
