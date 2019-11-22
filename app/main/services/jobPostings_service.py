@@ -3,6 +3,7 @@
 from app.main.models.JobPostings import JobPostings
 from app import bcrypt
 from flask import session
+from bson.json_util import dumps
 from app.main.services import studentactivity_service
 
 
@@ -25,9 +26,9 @@ def get_open_position_count():
     email=""
     if "user_email" in session:
         email = session["user_email"]
-    print(email)
+    # print(email)
     activityObj=studentactivity_service.getLatestUserActivity(email)
-    print(activityObj)
+    # print(activityObj)
     count=0
     for company in activityObj["companies"]:
         count += JobPostings.fetch_open_position_count(company)
@@ -37,7 +38,6 @@ def get_skills_count():
     email=""
     if "user_email" in session:
         email = session["user_email"]
-    print(email)
     activityObj=studentactivity_service.getLatestUserActivity(email)
     skillsDict={}
     for jobPosting in JobPostings.fetch_by_company(activityObj["companies"]):
@@ -51,5 +51,23 @@ def get_skills_count():
     for key,value in skillsDict.items():
         skillsDict[key]=len(set(skillsDict[key]))  
     return skillsDict
+
+def get_relevant_job_postings():
+    print(list(session.keys()))
+    email=""
+    if "user_email" in session:
+        email = session["user_email"]
+    activityObj=studentactivity_service.getLatestUserActivity(email)
+    jobPostingList = list(JobPostings.fetch_by_company(activityObj["companies"]))
+    for jobPosting in jobPostingList:
+        skills = jobPosting['skillsRequired'].split(',')
+        count=0
+        for skill in activityObj["skills"]:
+            if(skill in skills):
+                count = count+1
+        jobPosting["probability"] = (count/len(skills))*100
+    return jobPostingList
+
+    
     
 

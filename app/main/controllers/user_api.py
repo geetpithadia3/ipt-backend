@@ -18,10 +18,12 @@ def add_user():
 
 
 @user_api.route('/get_user')
+@cross_origin(supports_credentials=True)
 def get_user(email):
     return user_service.get_user(email)
 
 @user_api.route('/get_all_users')
+@cross_origin(supports_credentials=True)
 def get_all_users():
     try:
         return dumps(user_service.get_all_users())
@@ -30,10 +32,21 @@ def get_all_users():
 
 
 @user_api.route('/authenticate', methods = ['POST'])
+@cross_origin(supports_credentials=True)
 def authenticateUser():
     try:
-        requestData = request.get_json();
+        requestData = request.get_json()
         return dumps({'status':user_service.authenticateUser(requestData['email'],requestData['password'])}), 200, {'ContentType':'application/json'} 
     except Exception as e:
         return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
+
+
+@user_api.route('/logout')
+@cross_origin(supports_credentials=True)
+def logout():
+    try:
+        return 200
+    except Exception as e:
+        return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
+
 

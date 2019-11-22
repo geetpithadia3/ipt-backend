@@ -19,12 +19,14 @@ def add_company():
 
 
 @company_api.route('/get_company/<companyName>')
+@cross_origin(supports_credentials=True)
 def get_company():
     name = request.args.get()
     return company_service.add_company(name)
 
 
 @company_api.route('/get_company_details_list')
+@cross_origin(supports_credentials=True)
 def get_company_details_list():
     try:
         return dumps(company_service.get_company_details_list())
@@ -32,6 +34,7 @@ def get_company_details_list():
         return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
 
 @company_api.route('/get_company_list')
+@cross_origin(supports_credentials=True)
 def get_company_list():
     try:
         return dumps(company_service.get_company_list())

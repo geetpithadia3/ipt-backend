@@ -28,3 +28,11 @@ def get_companies_count():
         return dumps(studentactivity_service.get_skills_companies_count())
     except Exception as e:
         return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
+
+@dashboard_api.route('/get_relevant_job_postings')
+@cross_origin(supports_credentials=True)
+def get_relevant_job_postings():
+    try:
+        return dumps(jobPostings_service.get_relevant_job_postings())
+    except Exception as e:
+        return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
