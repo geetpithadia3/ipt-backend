@@ -11,7 +11,7 @@ def add_posting(data):
     JobPostings.insert(data)
 
 def update_posting(data):
-    JobPostings.update(jobId, data)
+    JobPostings.update(data)
 
 def get_posting(jobId):
     return JobPostings.fetch(jobId)
@@ -53,7 +53,6 @@ def get_skills_count():
     return skillsDict
 
 def get_relevant_job_postings():
-    print(list(session.keys()))
     email=""
     if "user_email" in session:
         email = session["user_email"]

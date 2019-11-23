@@ -25,3 +25,12 @@ def getActivitiesByUser():
         return dumps({'success': True, 'data': studentactivity_service.getActivitiesByUser(username)})
     except Exception as e:
         return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
+
+@studentactivity_api.route('/track', methods = ['GET'])
+@cross_origin(supports_credentials=True)
+def trackUser():
+    try:
+        studentactivity_service.trackUser()
+        return dumps({'success': True, 'data': ""})
+    except Exception as e:
+        return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')

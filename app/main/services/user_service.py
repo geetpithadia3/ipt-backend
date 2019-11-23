@@ -35,7 +35,7 @@ def get_all_users():
 
 
 def authenticateUser(email, password):
-    print(list(session["user_email"]))
+    # print(list(session["user_email"]))
     if(User.count_query({"email": email}) == 0):
         return 404
     elif(bcrypt.check_password_hash(User.fetch(email)["password"], password)):
