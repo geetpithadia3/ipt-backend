@@ -4,6 +4,7 @@ from app.main.models.StudentActivity import StudentActivity
 from flask import session
 from bson.json_util import dumps
 import pymongo
+from app.main.services import jobPostings_service
 
 def add_activity(activity):
     if "user_email" in session and session["user_email"] == activity["created_by"]:
@@ -33,13 +34,39 @@ def get_skills_companies_count():
     }
 
 def trackUser():
+    trackingResult = {}
     try:
         if "user_email" in session:
             userEmail = session["user_email"]
-            activities = StudentActivity.getActivitiesByUser(userEmail)
-            print(activities)
+            activities = StudentActivity.getActivitiesByUser(userEmail).sort("created_at",pymongo.ASCENDING)
+            trackingResult["profiles"] = []
+            trackingResult["trackingData"] = []
+            for activity in activities:
+                data = []
+                data.append({"timeStamp": activity["created_at"]})
+                companies = activity["companies"]
+                for company in companies:
+                    postings = list(jobPostings_service.get_postings_by_company_name([company]))
+                    for posting in postings:
+                        position = posting["position"]
+                        totalSkills = posting["skillsRequired"]
+                        userSkills = activity["skills"]
+                        probability = findProbability(userSkills, totalSkills)
+                        data.append({company+"-"+position: probability})
+                trackingResult["trackingData"].append(data)
+            return trackingResult
         else:
             raise Exception('Invalid Activity as request is malformed')
     except Exception as identifier:
+        print(identifier)
         raise Exception('Invalid Activity')
+
+def findProbability(userSkills, totalSkills):
+    userSkillsCount = 0
+    totalSkillsArray = totalSkills.split(",")
+    for userSkill in userSkills:
+        if userSkill in totalSkillsArray:
+            userSkillsCount += 1
+    probability = ((userSkillsCount)/len(totalSkillsArray)) * 100
+    return probability
 
