@@ -26,7 +26,7 @@ def get_open_position_count():
     email=""
     if "user_email" in session:
         email = session["user_email"]
-    # print(email)
+    print(email)
     activityObj=studentactivity_service.getLatestUserActivity(email)
     # print(activityObj)
     count=0
@@ -38,6 +38,7 @@ def get_skills_count():
     email=""
     if "user_email" in session:
         email = session["user_email"]
+    print(email)
     activityObj=studentactivity_service.getLatestUserActivity(email)
     skillsDict={}
     for jobPosting in JobPostings.fetch_by_company(activityObj["companies"]):
@@ -47,10 +48,12 @@ def get_skills_count():
                 skillsDict[skill.strip()].append(jobPosting['company'])
             else:
                 skillsDict[skill.strip()] = [jobPosting['company']]
-            
+    
+    skillsList=[]
     for key,value in skillsDict.items():
-        skillsDict[key]=len(set(skillsDict[key]))  
-    return skillsDict
+        skillsList.append([key,len(set(skillsDict[key]))])
+        # skillsDict[key]=len(set(skillsDict[key]))  
+    return skillsList
 
 def get_relevant_job_postings():
     print(list(session.keys()))

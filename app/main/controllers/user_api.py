@@ -45,7 +45,8 @@ def authenticateUser():
 @cross_origin(supports_credentials=True)
 def logout():
     try:
-        return 200
+        user_service.logout()
+        return "200"
     except Exception as e:
         return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
 
