@@ -39,7 +39,6 @@ def trackUser():
         if "user_email" in session:
             userEmail = session["user_email"]
             activities = StudentActivity.getActivitiesByUser(userEmail).sort("created_at",pymongo.ASCENDING)
-            trackingResult["profiles"] = []
             trackingResult["trackingData"] = []
             for activity in activities:
                 data = []
