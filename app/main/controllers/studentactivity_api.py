@@ -30,6 +30,6 @@ def getActivitiesByUser():
 @cross_origin(supports_credentials=True)
 def trackUser():
     try:
-        return dumps({'success': True, 'data': studentactivity_service.trackUser()})
+        return dumps(studentactivity_service.trackUser())
     except Exception as e:
         return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')

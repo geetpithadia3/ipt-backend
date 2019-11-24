@@ -41,8 +41,8 @@ def trackUser():
             activities = StudentActivity.getActivitiesByUser(userEmail).sort("created_at",pymongo.ASCENDING)
             trackingResult["trackingData"] = []
             for activity in activities:
-                data = []
-                data.append({"timeStamp": activity["created_at"]})
+                data = {}
+                data["timeStamp"]= activity["created_at"]
                 companies = activity["companies"]
                 for company in companies:
                     postings = list(jobPostings_service.get_postings_by_company_name([company]))
@@ -51,7 +51,7 @@ def trackUser():
                         totalSkills = posting["skillsRequired"]
                         userSkills = activity["skills"]
                         probability = findProbability(userSkills, totalSkills)
-                        data.append({company+"-"+position: probability})
+                        data[company+"-"+position]= probability
                 trackingResult["trackingData"].append(data)
             return trackingResult
         else:
