@@ -8,6 +8,16 @@ class StudentActivity(object):
         self.created_by = activity["created_by"]
         self.activity_type = activity["activity_type"]
         self.created_at = datetime.datetime.utcnow()
+    
+    @classmethod
+    def emptyObject(cls):
+        obj = {}
+        obj["skills"] = []
+        obj["companies"] = []
+        obj["created_by"] = ""
+        obj["activity_type"] = ""
+        obj["created_at"] = datetime.datetime.utcnow()
+        return cls(obj)
 
     def json(self):
         return {

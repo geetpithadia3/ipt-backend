@@ -69,3 +69,25 @@ def findProbability(userSkills, totalSkills):
     probability = ((userSkillsCount)/len(totalSkillsArray)) * 100
     return probability
 
+def getSkillsList():
+    if "user_email" in session:
+        userEmail = session["user_email"]
+        return getLatestUserActivity(userEmail)["skills"]
+
+def updateSkills(data):
+    try:
+        if "user_email" in session:
+            userEmail = session["user_email"]
+            newActivity = StudentActivity.emptyObject()
+            newActivity.activity_type = "Update"
+            newActivity.companies = getLatestUserActivity(userEmail)["companies"]
+            newActivity.created_by = userEmail
+            newActivity.skills = data["skillsList"]
+            newActivity.insert()
+            return getLatestUserActivity(userEmail)
+        else:
+            raise Exception('Invalid Activity')
+    except Exception as identifier:
+        raise Exception('Invalid Activity')
+    
+

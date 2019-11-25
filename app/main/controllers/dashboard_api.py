@@ -36,3 +36,21 @@ def get_relevant_job_postings():
         return dumps(jobPostings_service.get_relevant_job_postings())
     except Exception as e:
         return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
+
+@dashboard_api.route('/getskillslist')
+@cross_origin(supports_credentials=True)
+def getSkillsList():
+    try:
+        return dumps(studentactivity_service.getSkillsList())
+    except Exception as e:
+        return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
+
+
+@dashboard_api.route('/updateskillslist', methods = ['POST'])
+@cross_origin(supports_credentials=True)
+def updateSkills():
+    try:
+        requestData = request.get_json()
+        return dumps({'success': True, 'data': studentactivity_service.updateSkills(requestData)})
+    except Exception as e:
+        return Response(dumps({'error': str(e)}), status=500, mimetype='application/json')
